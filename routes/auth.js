@@ -252,21 +252,21 @@ router.post("/login", async (req, res) => {
     if (isPartnerRegister) {
       const isMatch = await bcrypt.compare(password, isPartnerRegister.password);
 
-      const token = await isPartnerRegister.generateAuthToken();
-
-      // res.status(200).json({ token });
-
-      // res.cookie("jwtoken", token, {
-      //   expires: new Date(Date.now() + 25892000000),
-      //   httpOnly: true,
-      //   domain: ".netlify.app",
-      // });
-
       if (!isMatch) {
-        res.status(400).json({ error: "Invalid credentials" });
-      } else {
-        res.status(201).json({ token });
+        return res.status(400).json({ error: "Invalid credentials" });
       }
+  
+      const token = await isPartnerRegister.generateAuthToken();
+  
+      // Set the JWT token as an HTTP-only cookie named "jwtoken"
+      res.cookie("jwtoken", token, {
+        expires: new Date(Date.now() + 25892000000), // Token expiration in milliseconds (approx. 30 days)
+        httpOnly: true,
+        domain: ".netlify.app", // Replace this with the appropriate domain
+      });
+  
+      res.status(201).json({ token });
+
     } else {
       res.status(400).json({ error: "Invalid Credentials" });
     }
