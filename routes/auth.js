@@ -187,7 +187,7 @@ router.get("/getfarmer", authenticate, (req, res) => {
   if (partner === "Renupawanpari23") {
     Farmer.find(function (err, farmers) {
       if (err) {
-        console.log(error);
+        console.log(err);
       }
       else {
         res.send(farmers);
@@ -196,7 +196,7 @@ router.get("/getfarmer", authenticate, (req, res) => {
   } else {
     Farmer.find({ partner: partner }, function (err, farmers) {
       if (err) {
-        console.log(error);
+        console.log(err);
       }
       else {
         res.send(farmers);
@@ -254,17 +254,18 @@ router.post("/login", async (req, res) => {
 
       const token = await isPartnerRegister.generateAuthToken();
 
-      // console.log(token);
+      // res.status(200).json({ token });
 
-      res.cookie("jwtoken", token, {
-        expires: new Date(Date.now() + 25892000000),
-        httpOnly: true,
-      });
+      // res.cookie("jwtoken", token, {
+      //   expires: new Date(Date.now() + 25892000000),
+      //   httpOnly: true,
+      //   domain: ".netlify.app",
+      // });
 
       if (!isMatch) {
         res.status(400).json({ error: "Invalid credentials" });
       } else {
-        res.status(201).json({ message: "signed in successfully" });
+        res.status(201).json({ token });
       }
     } else {
       res.status(400).json({ error: "Invalid Credentials" });
