@@ -6,10 +6,9 @@ require('../data/coupons');
 const Farmer = require('../model/farmerSchema');
 const Partner = require('../model/partnerSchema');
 const authenticate = require('../middleware/authenticate');
-const base_url = process.env.BASE_URL
 
 //create part USING ASYNC AWAIT
-router.post(`${base_url}/create`, authenticate, async (req, res) => {
+router.post("/create", authenticate, async (req, res) => {
 
   //object destructuring
   const {
@@ -97,7 +96,7 @@ router.post(`${base_url}/create`, authenticate, async (req, res) => {
 })
 
 
-router.post(`${base_url}/edit`, authenticate, async (req, res) => {
+router.post("/edit", authenticate, async (req, res) => {
   //object destructuring
   const {
     _id,
@@ -175,13 +174,13 @@ router.post(`${base_url}/edit`, authenticate, async (req, res) => {
 })
 
 
-router.get(`${base_url}/getdata`, authenticate, (req, res) => {
+router.get("/getdata", (req, res) => {
   // console.log("in get create");
   res.send(req.rootPartner);
 })
 
 
-router.get(`${base_url}/getfarmer`, authenticate, (req, res) => {
+router.get("/getfarmer", authenticate, (req, res) => {
 
   const partner = req.rootPartner.name;
 
@@ -207,7 +206,7 @@ router.get(`${base_url}/getfarmer`, authenticate, (req, res) => {
 })
 
 
-router.post(`${base_url}/signup`, async (req, res) => {
+router.post("/signup", async (req, res) => {
 
   const { name, email, phone, password, cpassword } = req.body;
 
@@ -241,7 +240,7 @@ router.post(`${base_url}/signup`, async (req, res) => {
 
 
 // login route
-router.post(`${base_url}/login`, async (req, res) => {
+router.post("/login", async (req, res) => {
 
   try {
     const { name, password } = req.body;
@@ -275,7 +274,7 @@ router.post(`${base_url}/login`, async (req, res) => {
   }
 });
 
-router.post(`${base_url}/forgot`, async (req, res) => {
+router.post("/forgot", async (req, res) => {
 
   const { name, email, phone } = req.body;
 
@@ -295,7 +294,7 @@ router.post(`${base_url}/forgot`, async (req, res) => {
   }
 })
 
-router.post(`${base_url}/reset`, async (req, res) => {
+router.post("/reset", async (req, res) => {
 
   const { name, password, cnfpassword } = req.body;
 
@@ -337,7 +336,7 @@ router.post(`${base_url}/reset`, async (req, res) => {
   }
 })
 
-router.get(`${base_url}/logout`, (req, res) => {
+router.get("/logout", (req, res) => {
   res.clearCookie('jwtoken');
   res.status(200).send('user logged out');
 })
