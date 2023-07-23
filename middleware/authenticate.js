@@ -3,7 +3,9 @@ const jwt = require('jsonwebtoken');
 
 const Authenticate = async(req,res,next)=>{
     try {
-        const token = req.cookies.jwtoken;
+        // const token = req.cookies.jwtoken;
+        let token = req.headers.authorization;
+        token = token?.split(" ")?.[1]
         const verifyToken = jwt.verify(token, process.env.SECRET_KEY);
 
         const rootPartner = await Partner.findOne({_id: verifyToken._id, "tokens.token":token});
