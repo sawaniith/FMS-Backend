@@ -338,7 +338,7 @@ router.post("/reset", async (req, res) => {
 })
 
 router.get("/logout", (req, res) => {
-  res.clearCookie('jwtoken');
+  // res.clearCookie('jwtoken');
   res.status(200).send('user logged out');
 })
 
