@@ -174,7 +174,7 @@ router.post("/edit", authenticate, async (req, res) => {
 })
 
 
-router.get("/getdata", (req, res) => {
+router.get("/getdata", authenticate, (req, res) => {
   // console.log("in get create");
   res.send(req.rootPartner);
 })
